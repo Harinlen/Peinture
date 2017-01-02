@@ -15,26 +15,33 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
+#ifndef KNMAINWINDOW_H
+#define KNMAINWINDOW_H
 
-#include <QApplication> //Application instance.
-#include "knmainwindow.h"
+#include <QMainWindow>
 
-#include "core/knpluginmanager.h" //Plugin Manager.
-
-int main(int argc, char *argv[])
+/*!
+ * \brief The KNMainWindow class provides a main application window for
+ * Peninture.\n
+ * The basic structure of the main window is a simple image viewer. It combines
+ * the advantages of the default viewer under Windows 7 and Mac OS X.
+ */
+class KNMainWindow : public QMainWindow
 {
-    //Create the application instance.
-    QApplication app(argc, argv);
-    //Initial the plugin manager.
-    KNPluginManager pluginManager;
-    //Initial the main window.
-    KNMainWindow mainWindow;
-    //Set the main window to the plugin manager.
-    pluginManager.setMainWindow(&mainWindow);
-    //Load plugins.
-    pluginManager.loadPlugins();
-    //Launch the application.
-    pluginManager.launchApplication();
-    //Spread message loop.
-    return app.exec();
-}
+    Q_OBJECT
+public:
+    /*!
+     * \brief Construct KNMainWindow class.
+     * \param parent The parent widget object.
+     */
+    explicit KNMainWindow(QWidget *parent = 0);
+
+signals:
+
+public slots:
+
+private:
+    ;
+};
+
+#endif // KNMAINWINDOW_H

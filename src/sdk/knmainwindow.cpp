@@ -15,26 +15,10 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-
-#include <QApplication> //Application instance.
 #include "knmainwindow.h"
 
-#include "core/knpluginmanager.h" //Plugin Manager.
-
-int main(int argc, char *argv[])
+KNMainWindow::KNMainWindow(QWidget *parent) :
+    QMainWindow(parent)
 {
-    //Create the application instance.
-    QApplication app(argc, argv);
-    //Initial the plugin manager.
-    KNPluginManager pluginManager;
-    //Initial the main window.
-    KNMainWindow mainWindow;
-    //Set the main window to the plugin manager.
-    pluginManager.setMainWindow(&mainWindow);
-    //Load plugins.
-    pluginManager.loadPlugins();
-    //Launch the application.
-    pluginManager.launchApplication();
-    //Spread message loop.
-    return app.exec();
+
 }
