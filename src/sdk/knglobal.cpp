@@ -15,32 +15,30 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-#ifndef KNMAINWINDOW_H
-#define KNMAINWINDOW_H
+#include "knimageparser.h"
 
-#include <QMainWindow>
+#include "knglobal.h"
 
-/*!
- * \brief The KNMainWindow class provides a main application window for
- * Peninture.\n
- * The basic structure of the main window is a simple image viewer. It combines
- * the advantages of the default viewer under Windows 7 and Mac OS X.
- */
-class KNMainWindow : public QMainWindow
+KNGlobal *KNGlobal::_instance = nullptr;
+
+KNGlobal *KNGlobal::instance()
 {
-    Q_OBJECT
-public:
-    /*!
-     * \brief Construct KNMainWindow class.
-     * \param parent The parent widget object.
-     */
-    explicit KNMainWindow(QWidget *parent = 0);
+    return _instance;
+}
 
-signals:
+void KNGlobal::initial(QObject *parent)
+{
+    // Check the instance pointer.
+    if(_instance)
+    {
+        return;
+    }
+    // Get the instance pointer.
+    _instance = new KNGlobal(parent);
+}
 
-public slots:
-
-private:
-};
-
-#endif // KNMAINWINDOW_H
+KNGlobal::KNGlobal(QObject *parent) : QObject(parent)
+{
+    // Initial the parser.
+    KNImageParser::initial(this);
+}

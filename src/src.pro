@@ -126,9 +126,20 @@ INCLUDEPATH += \
 SOURCES += \
     main.cpp \
     core/knpluginmanager.cpp \
-    sdk/knmainwindow.cpp
+    sdk/knmainwindow.cpp \
+    sdk/knimageviewer.cpp \
+    sdk/knimageparser.cpp \
+    plugins/kngifdecoder/kngifdecoder.cpp \
+    sdk/knglobal.cpp \
+    sdk/knsingletonapplication.cpp
 
 HEADERS += \
     core/knpluginmanager.h \
     sdk/knmainwindow.h \
-    sdk/knversion.h
+    sdk/knversion.h \
+    sdk/knimageviewer.h \
+    sdk/knimageparser.h \
+    sdk/knimagedecoder.h \
+    plugins/kngifdecoder/kngifdecoder.h \
+    sdk/knglobal.h \
+    sdk/knsingletonapplication.h

@@ -15,26 +15,35 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-#ifndef KNMAINWINDOW_H
-#define KNMAINWINDOW_H
+
+#ifndef KNIMAGEVIEWER_H
+#define KNIMAGEVIEWER_H
+
+#include <QUrl>
 
 #include <QMainWindow>
 
 /*!
- * \brief The KNMainWindow class provides a main application window for
- * Peninture.\n
- * The basic structure of the main window is a simple image viewer. It combines
- * the advantages of the default viewer under Windows 7 and Mac OS X.
+ * \brief The KNImageViewer class defines the image viewer window for showing
+ * the image.
  */
-class KNMainWindow : public QMainWindow
+class KNImageViewer : public QMainWindow
 {
     Q_OBJECT
 public:
     /*!
-     * \brief Construct KNMainWindow class.
-     * \param parent The parent widget object.
+     * \brief Construct a KNImageViewer window.
+     * \param parent The parent widget.
      */
-    explicit KNMainWindow(QWidget *parent = 0);
+    explicit KNImageViewer(QWidget *parent = nullptr);
+
+    /*!
+     * \brief Load and display an image to the current display data.
+     * \param fileUrl The file local or remote url.
+     * \return true for successfully load the image, or else failed to load the
+     * image.
+     */
+    bool loadImage(const QUrl &fileUrl);
 
 signals:
 
@@ -43,4 +52,4 @@ public slots:
 private:
 };
 
-#endif // KNMAINWINDOW_H
+#endif // KNIMAGEVIEWER_H

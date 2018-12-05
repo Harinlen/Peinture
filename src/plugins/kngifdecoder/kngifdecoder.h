@@ -15,32 +15,33 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-#ifndef KNMAINWINDOW_H
-#define KNMAINWINDOW_H
+#ifndef KNGIFDECODER_H
+#define KNGIFDECODER_H
 
-#include <QMainWindow>
+#include "knimagedecoder.h"
 
 /*!
- * \brief The KNMainWindow class provides a main application window for
- * Peninture.\n
- * The basic structure of the main window is a simple image viewer. It combines
- * the advantages of the default viewer under Windows 7 and Mac OS X.
+ * \brief The KNGifDecoder class provides the Graphics Interchange Format (GIF)
+ * decoding.
  */
-class KNMainWindow : public QMainWindow
+class KNGifDecoder : public KNImageDecoder
 {
     Q_OBJECT
 public:
     /*!
-     * \brief Construct KNMainWindow class.
-     * \param parent The parent widget object.
+     * \brief Construct a KNGifDecoder class.
+     * \param parent The parent object.
      */
-    explicit KNMainWindow(QWidget *parent = 0);
+    explicit KNGifDecoder(QObject *parent = nullptr);
+
+    /*!
+     * \brief Reimplemented KNImageDecoder::canParse().
+     */
+    bool canParse(const QByteArray &imageData) Q_DECL_OVERRIDE;
 
 signals:
 
 public slots:
-
-private:
 };
 
-#endif // KNMAINWINDOW_H
+#endif // KNGIFDECODER_H

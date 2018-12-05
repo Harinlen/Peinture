@@ -15,32 +15,36 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-#ifndef KNMAINWINDOW_H
-#define KNMAINWINDOW_H
+#ifndef KNIMAGEDECODER_H
+#define KNIMAGEDECODER_H
 
-#include <QMainWindow>
+#include <QObject>
 
 /*!
- * \brief The KNMainWindow class provides a main application window for
- * Peninture.\n
- * The basic structure of the main window is a simple image viewer. It combines
- * the advantages of the default viewer under Windows 7 and Mac OS X.
+ * \brief The KNImageDecoder class provides an port for the decoding the image.
  */
-class KNMainWindow : public QMainWindow
+class KNImageDecoder : public QObject
 {
     Q_OBJECT
 public:
     /*!
-     * \brief Construct KNMainWindow class.
-     * \param parent The parent widget object.
+     * \brief Construct a KNImageDecoder class.
+     * \param parent The parent object.
      */
-    explicit KNMainWindow(QWidget *parent = 0);
+    KNImageDecoder(QObject *parent = nullptr) : QObject(parent)
+    {
+    }
+
+    /*!
+     * \brief Return the image could parse the image or not.
+     * \param imageData The data of the image.
+     * \return If the parser could parse the image, return true.
+     */
+    virtual bool canParse(const QByteArray &imageData) = 0;
 
 signals:
 
 public slots:
-
-private:
 };
 
-#endif // KNMAINWINDOW_H
+#endif // KNIMAGEDECODER_H

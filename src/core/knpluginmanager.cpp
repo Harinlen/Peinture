@@ -20,13 +20,24 @@
 //Dependencies.
 #include "knmainwindow.h"
 #include "knversion.h"
+#include "knglobal.h"
+#include "knimageparser.h"
+#include "knimageviewer.h"
+
+//Plugins
+#include "plugins/kngifdecoder/kngifdecoder.h"
 
 #include "knpluginmanager.h"
 
+#include <QDebug>
+
 KNPluginManager::KNPluginManager(QObject *parent) :
     QObject(parent),
-    m_mainWindow(nullptr)
+    m_mainWindow(nullptr),
+    m_viewer(nullptr)
 {
+    // Load the global.
+    KNGlobal::initial(this);
 }
 
 KNMainWindow *KNPluginManager::mainWindow() const
@@ -47,13 +58,22 @@ void KNPluginManager::setMainWindow(KNMainWindow *mainWindow)
 
 void KNPluginManager::loadPlugins()
 {
-    ;
+    // Add decoders.
+    knImageParser->addDecoder(new KNGifDecoder());
 }
 
 void KNPluginManager::launchApplication()
 {
+    // For Windows and Linux, it will check the arguments.
+#if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
+    // Check the arguments.
+    QStringList arguments = qApp->arguments();
+    // Create image viewer window.
+    ;
+#elif defined(Q_OS_MACX)
     //Show the main window.
     m_mainWindow->show();
+#endif
 }
 
 inline void KNPluginManager::setApplicationInformation()
