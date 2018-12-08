@@ -26,6 +26,18 @@ KNGifDecoder::KNGifDecoder(QObject *parent) :
 bool KNGifDecoder::canParse(const QByteArray &imageData)
 {
     // Detect the gif header.
-    return imageData.at(0)=='G' && imageData.at(1)=='I' && imageData.at(2)=='F'
+    return imageData.size()>6 && // Minimum size of the image.
+            imageData.at(0)=='G' && imageData.at(1)=='I' && imageData.at(2)=='F'
             && imageData.at(3)=='8' && imageData.at(5)=='a';
+}
+
+QList<QPixmap> KNGifDecoder::decode(const QByteArray &imageData)
+{
+    // Check the gif header.
+    if(imageData.size()<6)
+    {
+        return QList<QPixmap>();
+    }
+    // Decode the GIF image.
+    return QList<QPixmap>();
 }

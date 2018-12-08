@@ -20,6 +20,8 @@
 #define KNIMAGEVIEWER_H
 
 #include <QUrl>
+#include <QList>
+#include <QPixmap>
 
 #include <QMainWindow>
 
@@ -49,7 +51,21 @@ signals:
 
 public slots:
 
+protected:
+    /*!
+     * \brief Reimplemented from QMainWindow::paintEvent().
+     */
+    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
+
+    /*!
+     * \brief Reimplemented from QMainWindow::resizeEvent().
+     */
+    void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
+
 private:
+    inline void rescalePixmap();
+    QList<QPixmap> m_rawPixmap, m_scaledPixmap;
+    bool m_singleMode;
 };
 
 #endif // KNIMAGEVIEWER_H

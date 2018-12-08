@@ -19,7 +19,7 @@ TEMPLATE = app
 TARGET = peinture
 
 # Add Qt modules, the Qt major version should be greater than 5.
-QT += core gui widgets
+QT += core gui widgets network
 
 # Enabled C++ 11 configures.
 CONFIG += c++11
@@ -131,7 +131,12 @@ SOURCES += \
     sdk/knimageparser.cpp \
     plugins/kngifdecoder/kngifdecoder.cpp \
     sdk/knglobal.cpp \
-    sdk/knsingletonapplication.cpp
+    sdk/knsingletonapplication.cpp \
+    sdk/knlocalpeer.cpp \
+    sdk/knlockedfile.cpp \
+    sdk/knlockedfile_unix.cpp \
+    sdk/knlockedfile_win.cpp \
+    plugins/kngeneraldecoder/kngeneraldecoder.cpp
 
 HEADERS += \
     core/knpluginmanager.h \
@@ -142,4 +147,7 @@ HEADERS += \
     sdk/knimagedecoder.h \
     plugins/kngifdecoder/kngifdecoder.h \
     sdk/knglobal.h \
-    sdk/knsingletonapplication.h
+    sdk/knsingletonapplication.h \
+    sdk/knlocalpeer.h \
+    sdk/knlockedfile.h \
+    plugins/kngeneraldecoder/kngeneraldecoder.h

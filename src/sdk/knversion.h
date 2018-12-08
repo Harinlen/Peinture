@@ -308,6 +308,9 @@ caVSVVT848STUhfT48ST84000000048S80a00000440000000004SUTT840004STTTTVfTSSSSTfU8S,
                                          )CaYCo"
 */
 
+//Applicaiton handler.
+#define APP_HANDLER "org.kreogist.peinture"
+
 //Change the version here.
 #define MAJOR_VERSION 0
 #define MINOR_VERSION 0

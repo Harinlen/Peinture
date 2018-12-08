@@ -15,46 +15,40 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-#ifndef KNGLOBAL_H
-#define KNGLOBAL_H
+#ifndef KNGENERALDECODER_H
+#define KNGENERALDECODER_H
 
-#include <QObject>
+#include "knimagedecoder.h"
 
-#define knGlobal (KNGlobal::instance())
-
-class KNImageViewer;
 /*!
- * \brief The KNGlobal class provides the global.
+ * \brief The KNGeneralDecoder class provide a general decoder which could
+ * decode most default image format. It will use the QPixmap default decoding
+ * method to decode the image.
+ * It is responsable for decoding BMP, JPG, JPEG, PNG, PBM, PGM, PPM, XBM, XPM.
  */
-class KNGlobal : public QObject
+class KNGeneralDecoder : public KNImageDecoder
 {
     Q_OBJECT
 public:
     /*!
-     * \brief Get the global instance pointer.
-     * \return The global instance pointer.
+     * \brief KNGeneralDecoder
+     * \param parent
      */
-    static KNGlobal *instance();
+    explicit KNGeneralDecoder(QObject *parent = nullptr);
 
     /*!
-     * \brief Initial the global instance.
-     * \param parent The parent object.
+     * \brief Reimplemented KNImageDecoder::canParse().
      */
-    static void initial(QObject *parent = nullptr);
+    bool canParse(const QByteArray &imageData) Q_DECL_OVERRIDE;
 
     /*!
-     * \brief Create an image viewer instance.
-     * \return The image viewer instance pointer;
+     * \brief Reimplemented KNImageDecoder::decode().
      */
-    KNImageViewer *createViewer();
+    QList<QPixmap> decode(const QByteArray &imageData) Q_DECL_OVERRIDE;
 
 signals:
 
 public slots:
-
-private:
-    static KNGlobal *_instance;
-    explicit KNGlobal(QObject *parent = nullptr);
 };
 
-#endif // KNGLOBAL_H
+#endif // KNGENERALDECODER_H

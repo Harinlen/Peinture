@@ -16,6 +16,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 #include "knimageparser.h"
+#include "knimageviewer.h"
 
 #include "knglobal.h"
 
@@ -35,6 +36,11 @@ void KNGlobal::initial(QObject *parent)
     }
     // Get the instance pointer.
     _instance = new KNGlobal(parent);
+}
+
+KNImageViewer *KNGlobal::createViewer()
+{
+    return new KNImageViewer();
 }
 
 KNGlobal::KNGlobal(QObject *parent) : QObject(parent)

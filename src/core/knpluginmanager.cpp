@@ -25,6 +25,7 @@
 #include "knimageviewer.h"
 
 //Plugins
+#include "plugins/kngeneraldecoder/kngeneraldecoder.h"
 #include "plugins/kngifdecoder/kngifdecoder.h"
 
 #include "knpluginmanager.h"
@@ -33,8 +34,7 @@
 
 KNPluginManager::KNPluginManager(QObject *parent) :
     QObject(parent),
-    m_mainWindow(nullptr),
-    m_viewer(nullptr)
+    m_mainWindow(nullptr)
 {
     // Load the global.
     KNGlobal::initial(this);
@@ -59,6 +59,7 @@ void KNPluginManager::setMainWindow(KNMainWindow *mainWindow)
 void KNPluginManager::loadPlugins()
 {
     // Add decoders.
+    knImageParser->addDecoder(new KNGeneralDecoder());
     knImageParser->addDecoder(new KNGifDecoder());
 }
 
@@ -69,7 +70,29 @@ void KNPluginManager::launchApplication()
     // Check the arguments.
     QStringList arguments = qApp->arguments();
     // Create image viewer window.
-    ;
+    if(arguments.size()>1)
+    {
+        // Remove the first argument (program path).
+        arguments.takeFirst();
+        // Loop and load the image.
+        while(!arguments.isEmpty())
+        {
+            // Create the viewer.
+            KNImageViewer *viewer=knGlobal->createViewer();
+            // Check the viewer.
+            if(viewer)
+            {
+                QString filePath = arguments.takeFirst();
+                // Load the image from the file.
+                viewer->loadImage(QUrl::fromLocalFile(filePath));
+                // Show the viewer.
+                viewer->show();
+            }
+        }
+        return;
+    }
+    // Or else just show the normal window.
+    m_mainWindow->show();
 #elif defined(Q_OS_MACX)
     //Show the main window.
     m_mainWindow->show();

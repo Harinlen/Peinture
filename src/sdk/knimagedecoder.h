@@ -18,6 +18,9 @@
 #ifndef KNIMAGEDECODER_H
 #define KNIMAGEDECODER_H
 
+#include <QList>
+#include <QPixmap>
+
 #include <QObject>
 
 /*!
@@ -41,6 +44,14 @@ public:
      * \return If the parser could parse the image, return true.
      */
     virtual bool canParse(const QByteArray &imageData) = 0;
+
+    /*!
+     * \brief Decode the image data using the current decoder.
+     * \param imageData The raw image data.
+     * \return The image result stream. Normally it should contain only one
+     * image. For some format (GIF89a), it could return multiple images.
+     */
+    virtual QList<QPixmap> decode(const QByteArray &imageData) = 0;
 
 signals:
 

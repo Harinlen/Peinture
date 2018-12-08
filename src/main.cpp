@@ -16,15 +16,19 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <QApplication> //Application instance.
+#include "knsingletonapplication.h" //Singleton application
+#include "knversion.h"  // For public settings.
 #include "knmainwindow.h"
 
 #include "core/knpluginmanager.h" //Plugin Manager.
 
 int main(int argc, char *argv[])
 {
-    //Create the application instance.
-    QApplication app(argc, argv);
+#if QT_VERSION_MINOR >= 6
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
+#endif
+    //Create a singleton pattern application.
+    KNSingletonApplication app(argc, argv, APP_HANDLER);
     //Initial the plugin manager.
     KNPluginManager pluginManager;
     //Initial the main window.

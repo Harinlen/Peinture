@@ -39,6 +39,11 @@ public:
      */
     bool canParse(const QByteArray &imageData) Q_DECL_OVERRIDE;
 
+    /*!
+     * \brief Reimplemented KNImageDecoder::decode().
+     */
+    QList<QPixmap> decode(const QByteArray &imageData) Q_DECL_OVERRIDE;
+
 signals:
 
 public slots:

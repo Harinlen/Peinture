@@ -16,16 +16,20 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 #include <QFile>
+#include <QFileInfo>
 
 #include "knimageparser.h"
+#include "knimagedecoder.h"
 
 #include "knimageviewer.h"
 
 #include <QDebug>
 
-KNImageViewer::KNImageViewer(QWidget *parent) : QMainWindow(parent)
+KNImageViewer::KNImageViewer(QWidget *parent) :
+    QMainWindow(parent),
+    m_singleMode(false)
 {
-    ;
+    setAttribute(Qt::WA_DeleteOnClose, true);
 }
 
 bool KNImageViewer::loadImage(const QUrl &fileUrl)
@@ -39,11 +43,64 @@ bool KNImageViewer::loadImage(const QUrl &fileUrl)
         {
             return false;
         }
+        // Update the title.
+        setWindowTitle(QFileInfo(imageFile).fileName());
         // Load the file data to the memory.
         imageData=imageFile.readAll();
         imageFile.close();
     }
-    // Decode the image file data.
-    qDebug()<<knImageParser->findDecoder(imageData);
+    // Try to find the decoder.
+    KNImageDecoder *decoder=knImageParser->findDecoder(imageData);
+    if(decoder==nullptr)
+    {
+        // Failed to find image decoder.
+        return false;
+    }
+    //Decode the image file data.
+    QList<QPixmap> renderData=decoder->decode(imageData);
+    if(renderData.size()==1)
+    {
+        // Single image rendering mode.
+        m_singleMode=true;
+        m_rawPixmap=renderData;
+        // Rescale the image.
+        rescalePixmap();
+        // Update the image.
+        update();
+        return true;
+    }
     return false;
+}
+
+void KNImageViewer::paintEvent(QPaintEvent *event)
+{
+    // Paint the main window.
+    QMainWindow::paintEvent(event);
+    // Draw the pixmap data.
+    if(m_scaledPixmap.isEmpty())
+    {
+        // Render the cannot open text.
+        return;
+    }
+    // Render the image according to the current mode.
+    if(m_singleMode)
+    {
+        // Render the only image.
+        return;
+    }
+}
+
+void KNImageViewer::resizeEvent(QResizeEvent *event)
+{
+    // Resize the window.
+    QMainWindow::resizeEvent(event);
+    // Rescale the image.
+    rescalePixmap();
+    // Update the scaled image.
+    update();
+}
+
+inline void KNImageViewer::rescalePixmap()
+{
+    ;
 }
